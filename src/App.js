@@ -9,8 +9,12 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          squares: Array(9).fill(null),
-          xIsNext: true,
+            squares: Array(9).fill(null),
+            xIsNext: true,
+            currentTurn: true,
+            player1: '',
+            player2: '',
+            display: 'none',
         };
     }
 
@@ -21,8 +25,9 @@ class App extends Component {
         }
         squares[i] = this.state.xIsNext ? 'X' : 'O';
         this.setState({
-          squares: squares,
-          xIsNext: !this.state.xIsNext,
+            squares: squares,
+            currentTurn: this.state.xIsNext,
+            xIsNext: !this.state.xIsNext,
         });
     }
 
@@ -35,32 +40,59 @@ class App extends Component {
         );
     }
 
+    reset = () => {
+        this.setState({ squares: [] });
+    }
+
+    startGame = () => {
+        this.setState({
+            player1: document.getElementById("p1").value,
+            player2: document.getElementById("p2").value,
+            display: 'block'
+        });
+        // var elems = document.getElementsByClassName('game-board');
+        // elems[0].style.display = 'block';
+    }
+
+
     render() {
         const winner = calculateWinner(this.state.squares);
         let   status;
+        let player1 = this.state.player1;
+        let player2 = this.state.player2;
         if (winner) {
-            status = 'Winner: ' + winner;
+            status = 'Winner: ' + (this.state.currentTurn ? player1 : player2);
         } else {
-            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+            status = 'Next player: ' + (this.state.xIsNext ? player1 : player2);
         }
         
         return (
             <div>
-                <div className="status">{status}</div>
-                <div className="board-row">
-                    {this.renderSquare(0)}
-                    {this.renderSquare(1)}
-                    {this.renderSquare(2)}
+                <div className="game-player">
+                    <label>Player 1:</label><input type="text" name="p1" id="p1"/><br/>
+                    <label>Player 2:</label><input type="text" name="p2" id="p2"/>
+                    <button onClick={ this.startGame }>Start</button>
                 </div>
-                <div className="board-row">
-                    {this.renderSquare(3)}
-                    {this.renderSquare(4)}
-                    {this.renderSquare(5)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(6)}
-                    {this.renderSquare(7)}
-                    {this.renderSquare(8)}
+                <div className="game-board" style={{display:`${ this.state.display }`}}>
+                    <div className="status">{status}</div>
+                    <div>
+                        <button onClick={ this.reset } >Reset</button>
+                    </div>
+                    <div className="board-row">
+                        {this.renderSquare(0)}
+                        {this.renderSquare(1)}
+                        {this.renderSquare(2)}
+                    </div>
+                    <div className="board-row">
+                        {this.renderSquare(3)}
+                        {this.renderSquare(4)}
+                        {this.renderSquare(5)}
+                    </div>
+                    <div className="board-row">
+                        {this.renderSquare(6)}
+                        {this.renderSquare(7)}
+                        {this.renderSquare(8)}
+                    </div>
                 </div>
             </div>
         );
