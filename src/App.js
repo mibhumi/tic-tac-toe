@@ -62,21 +62,22 @@ class App extends Component {
         let player2 = this.state.player2;
         if (winner) {
             status = 'Winner: ' + (this.state.currentTurn ? player1 : player2);
+            this.reset();
         } else {
             status = 'Next player: ' + (this.state.xIsNext ? player1 : player2);
         }
         
         return (
-            <div>
+            <div class="container">
                 <div className="game-player">
-                    <label>Player 1:</label><input type="text" name="p1" id="p1"/><br/>
-                    <label>Player 2:</label><input type="text" name="p2" id="p2"/>
-                    <button onClick={ this.startGame }>Start</button>
+                    <label>Player 1:</label><input type="text" class="textbox-width" name="p1" id="p1"/><br/>
+                    <label>Player 2:</label><input type="text" class="textbox-width" name="p2" id="p2"/><br/>
+                    <button class="button-color" onClick={ this.startGame }>Start</button>
                 </div>
                 <div className="game-board" style={{display:`${ this.state.display }`}}>
                     <div className="status">{status}</div>
                     <div>
-                        <button onClick={ this.reset } >Reset</button>
+                        <button class="button-color" onClick={ this.reset } >Reset</button>
                     </div>
                     <div className="board-row">
                         {this.renderSquare(0)}
