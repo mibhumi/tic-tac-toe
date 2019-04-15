@@ -62,17 +62,16 @@ class App extends Component {
         let player2 = this.state.player2;
         if (winner) {
             status = 'Winner: ' + (this.state.currentTurn ? player1 : player2);
-            this.reset();
         } else {
             status = 'Next player: ' + (this.state.xIsNext ? player1 : player2);
         }
         
         return (
-            <div class="container">
+            <div className="container">
                 <div className="game-player">
                     <label>Player 1:</label><input type="text" class="textbox-width" name="p1" id="p1"/><br/>
                     <label>Player 2:</label><input type="text" class="textbox-width" name="p2" id="p2"/><br/>
-                    <button class="button-color" onClick={ this.startGame }>Start</button>
+                    <button className="button-color" onClick={ this.startGame }>Start</button>
                 </div>
                 <div className="game-board" style={{display:`${ this.state.display }`}}>
                     <div className="status">{status}</div>
